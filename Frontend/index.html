@@ -144,6 +144,9 @@
         <main id="chat-container" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar w-full"></main>
          <footer class="p-5 glass border-t">
             <div class="max-w-4xl mx-auto flex gap-3">
+                 <input type="text" id="user-input" placeholder="Prompt..."
+                    class="flex-1 bg-white/5 border border-white/10 rounded-xl py-3.5 px-6 text-sm focus:outline-none focus:border-cyan-500/50"
+                    onkeydown="if(event.key === 'Enter') sendMessage()">
     </div>
 </body>
 </html>
