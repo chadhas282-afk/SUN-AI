@@ -188,6 +188,7 @@
             }
             return `<div class="relative group">${btns}<pre class="language-${lang || 'txt'}"><code id="${id}">${safe}</code></pre></div>`;
         }
+        marked.setOptions({ renderer, gfm: true, breaks: true });
     </script>
 </body>
 
