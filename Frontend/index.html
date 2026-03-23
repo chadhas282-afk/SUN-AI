@@ -193,6 +193,11 @@
          function renderSidebar() {
             const q = document.getElementById('search-history').value.toLowerCase();
             const h = getHistory().filter(c => c.title.toLowerCase().includes(q));
+             document.getElementById('history-list').innerHTML = h.slice().reverse().map(c => `
+                <div class="sidebar-item ${c.id === currentChatId ? 'sidebar-active' : ''}" onclick="loadChat('${c.id}')">
+                    <span class="truncate uppercase tracking-wider">${c.title}</span>
+                    <button class="delete-chat" onclick="deleteSession('${c.id}', event)"><i data-lucide="trash-2" class="w-3 h-3 text-red-400"></i></button>
+                </div>`).join('');
          }
     </script>
 </body>
