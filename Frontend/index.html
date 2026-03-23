@@ -183,6 +183,10 @@
             const safe = (raw || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             const id = 'c-' + Math.random().toString(36).substr(2, 5);
             let btns = `<button class="action-btn" style="right:8px" onclick="copyC('${id}', this)">Copy</button>`;
+            if (lang === 'html' || safe.includes('&lt;!DOCTYPE html&gt;')) {
+                btns += `<button class="action-btn" style="right:55px; background:#10b981; color:white;" onclick="previewH('${id}')">Preview</button>`;
+            }
+            return `<div class="relative group">${btns}<pre class="language-${lang || 'txt'}"><code id="${id}">${safe}</code></pre></div>`;
         }
     </script>
 </body>
