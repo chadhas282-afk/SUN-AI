@@ -255,7 +255,7 @@
             function previewH(id) { const w = window.open(); w.document.write(document.getElementById(id).innerText); w.document.close(); }
 
             function saveToHistory(p, r) {
-                
+                const h = getHistory(); let c = h.find(x => x.id === currentChatId);
             }
     </script>
 </body>
