@@ -245,6 +245,7 @@
 
             function deleteSession(id, e) {
                 e.stopPropagation();
+                if (!confirm("Delete?")) return;
             }
     </script>
 </body>
