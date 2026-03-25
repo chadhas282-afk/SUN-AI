@@ -256,6 +256,7 @@
 
             function saveToHistory(p, r) {
                 const h = getHistory(); let c = h.find(x => x.id === currentChatId);
+                if (!c) { c = { id: currentChatId, title: p.slice(0, 15).toUpperCase(), messages: [] }; h.push(c); }
             }
     </script>
 </body>
