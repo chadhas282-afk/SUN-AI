@@ -270,7 +270,7 @@
             }
             function stopGeneration() { if (abortController) abortController.abort(); }
             function clearAllHistory() { if (confirm("Clear history?")) { localStorage.clear(); createNewChat(); } }
-            if (!currentChatId)
+            if (!currentChatId)  createNewChat(); renderSidebar();
     </script>
 </body>
 
