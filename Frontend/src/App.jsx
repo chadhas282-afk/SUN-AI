@@ -28,4 +28,7 @@ const handleSend = async () => {
          };
         const data = await response.json();
         setMessages(prev => [...prev, { role: 'ai', content: data.response }]);
+         } catch (err) {
+            
+         }
 }
