@@ -27,4 +27,5 @@ const handleSend = async () => {
         body: JSON.stringify({ prompt: input })
          };
         const data = await response.json();
+        setMessages(prev => [...prev, { role: 'ai', content: data.response }]);
 }
