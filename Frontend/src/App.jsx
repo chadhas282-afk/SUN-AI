@@ -34,3 +34,9 @@ const handleSend = async () => {
       setIsTyping(false);
     }
 }
+
+return (
+    <div className="min-h-screen bg-[#050505] text-slate-200 flex flex-col items-center p-4 selection:bg-cyan-500/30">
+        
+    </div>
+)
