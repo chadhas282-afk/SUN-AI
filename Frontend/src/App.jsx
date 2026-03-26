@@ -30,5 +30,7 @@ const handleSend = async () => {
         setMessages(prev => [...prev, { role: 'ai', content: data.response }]);
          } catch (err) {
             setMessages(prev => [...prev, { role: 'ai', content: "Connection lost. Is the Backend running?" }]);
-         }
+         }finally {
+      setIsTyping(false);
+    }
 }
