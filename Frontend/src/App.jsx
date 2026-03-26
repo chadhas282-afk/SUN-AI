@@ -18,4 +18,5 @@ const handleSend = async () => {
     const userMsg = { role: 'user', content: input };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
+    setIsTyping(true);
 }
