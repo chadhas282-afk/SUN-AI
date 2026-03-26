@@ -11,3 +11,7 @@ const Lumina = () => {
 useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+const handleSend = async () => {
+    
+}
