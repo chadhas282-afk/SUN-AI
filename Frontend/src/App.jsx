@@ -37,6 +37,6 @@ const handleSend = async () => {
 
 return (
     <div className="min-h-screen bg-[#050505] text-slate-200 flex flex-col items-center p-4 selection:bg-cyan-500/30">
-        
+        <div className="fixed top-0 left-1/2 -translate-x-1/2 w-125 h-75 bg-cyan-600/20 blur-[120px] rounded-full -z-10" />
     </div>
 )
