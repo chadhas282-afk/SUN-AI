@@ -57,7 +57,7 @@ return (
                     >
 
                     </motion.div>
-                )}
+                ))}
             </AnimatePresence>
         </main>
     </div>
