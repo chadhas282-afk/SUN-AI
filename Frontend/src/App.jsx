@@ -50,7 +50,9 @@ return (
         </header>
         <main className="w-full max-w-3xl flex-1 flex flex-col gap-4 overflow-y-auto custom-scrollbar pb-24">
             <AnimatePresence mode='popLayout'>
-                
+                {messages.map((msg, i) => (
+
+                )}
             </AnimatePresence>
         </main>
     </div>
