@@ -59,6 +59,7 @@ return (
                     >
                         <div className={`max-w-[80%] px-5 py-3 rounded-2xl border${
                 msg.role === 'user' 
+                ? 'bg-white/5 border-white/10 text-white' 
             }
 
                     </motion.div>
