@@ -69,7 +69,7 @@ return (
             </AnimatePresence>
             {isTyping && (
                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-1 p-2">
-                    
+                    <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" />
                  </motion.div>
             )}
         </main>
