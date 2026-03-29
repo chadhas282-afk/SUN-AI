@@ -74,6 +74,7 @@ return (
                      <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce [animation-delay:-.5s]" />
                  </motion.div>
             )}
+             <div ref={scrollRef} />
         </main>
     </div>
 )
