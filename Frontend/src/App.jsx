@@ -77,7 +77,7 @@ return (
              <div ref={scrollRef} />
         </main>
          <div className="fixed bottom-8 w-full max-w-3xl px-4">
-            
+             <div className="relative flex items-center bg-white/5 backdrop-blur-xl border border-white/10 p-2 rounded-2xl shadow-2xl"></div>
          </div>
     </div>
 )
