@@ -77,7 +77,16 @@ return (
              <div ref={scrollRef} />
         </main>
          <div className="fixed bottom-8 w-full max-w-3xl px-4">
-             <div className="relative flex items-center bg-white/5 backdrop-blur-xl border border-white/10 p-2 rounded-2xl shadow-2xl"></div>
+             <div className="relative flex items-center bg-white/5 backdrop-blur-xl border border-white/10 p-2 rounded-2xl shadow-2xl">
+             <input 
+            type="text" 
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            placeholder="Type a message..."
+            className="flex-1 bg-transparent px-4 py-3 outline-none placeholder:text-slate-500"
+          />
+          </div>
          </div>
     </div>
 )
