@@ -76,5 +76,8 @@ return (
             )}
              <div ref={scrollRef} />
         </main>
+         <div className="fixed bottom-8 w-full max-w-3xl px-4">
+            
+         </div>
     </div>
 )
