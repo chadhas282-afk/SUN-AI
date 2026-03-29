@@ -86,6 +86,12 @@ return (
             placeholder="Type a message..."
             className="flex-1 bg-transparent px-4 py-3 outline-none placeholder:text-slate-500"
           />
+           <button 
+            onClick={handleSend}
+            className="bg-white text-black font-bold px-6 py-3 rounded-xl hover:bg-cyan-400 transition-colors active:scale-95"
+          >
+            Send
+          </button>
           </div>
          </div>
     </div>
