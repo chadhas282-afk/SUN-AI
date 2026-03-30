@@ -7,3 +7,5 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStream
 from fastapi.middleware.cors import CORSMiddleware
 from threading import Thread
 from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
