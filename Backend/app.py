@@ -33,3 +33,6 @@ async def generate_tokens(prompt: str, request: Request):
         },
         {"role": "user", "content": prompt},
     ]
+    inputs = tokenizer.apply_chat_template(
+        
+    )
