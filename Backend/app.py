@@ -26,3 +26,6 @@ model = AutoModelForCausalLM.from_pretrained(
     device_map="auto"
 )
 async def generate_tokens(prompt: str, request: Request):
+    messages = [
+        
+    ]
