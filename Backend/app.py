@@ -40,3 +40,4 @@ async def generate_tokens(prompt: str, request: Request):
     ).to(model.device)
 
 if isinstance(inputs, torch.Tensor):
+    input_ids = inputs
