@@ -38,3 +38,5 @@ async def generate_tokens(prompt: str, request: Request):
         add_generation_prompt=True,
         return_tensors="pt"
     ).to(model.device)
+
+if isinstance(inputs, torch.Tensor):
