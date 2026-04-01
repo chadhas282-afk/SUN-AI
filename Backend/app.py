@@ -42,4 +42,8 @@ async def generate_tokens(prompt: str, request: Request):
 if isinstance(inputs, torch.Tensor):
     input_ids = inputs
 else:
-        input_ids = inputs["input_ids"]
+    input_ids = inputs["input_ids"]
+
+streamer = TextIteratorStreamer(
+    
+)
