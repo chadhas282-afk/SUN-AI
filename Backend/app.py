@@ -45,5 +45,6 @@ else:
     input_ids = inputs["input_ids"]
 
 streamer = TextIteratorStreamer(
+    tokenizer,
     
 )
