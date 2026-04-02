@@ -7,7 +7,6 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStream
 from fastapi.middleware.cors import CORSMiddleware
 from threading import Thread
 from fastapi.middleware.cors import CORSMiddleware
-
 app = FastAPI()
 
 app.add_middleware(
@@ -68,3 +67,9 @@ thread.start()
     for new_text in streamer:
         if await request.is_disconnected():
             break 
+        
+         if new_text:
+                print(new_text, end="", flush=True)
+                yield f"data: {json.dumps({'text': new_text})}\n\n"
+            
+            await asyncio.sleep(0.01)
