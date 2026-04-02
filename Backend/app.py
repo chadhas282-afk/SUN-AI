@@ -64,5 +64,7 @@ gen_kwargs = dict(
 thread = Thread(target=model.generate, kwargs=gen_kwargs)
 thread.start()
 
-try:
-    
+ try:
+    for new_text in streamer:
+        if await request.is_disconnected():
+            break 
