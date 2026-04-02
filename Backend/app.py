@@ -57,4 +57,5 @@ gen_kwargs = dict(
     max_new_tokens=1024,
     do_sample=True,
     temperature=0.4,
+    top_p=0.9,
 )
