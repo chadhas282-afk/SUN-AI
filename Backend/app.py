@@ -88,4 +88,5 @@ async def chat(request: Request):
     data = await request.json()
     return StreamingResponse(
         generate_tokens(data['prompt'], request),
+        media_type="text/event-stream"
     )
