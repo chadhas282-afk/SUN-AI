@@ -3,16 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lumina Elite | AI Terminal</title>
-
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link id="prism-theme" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
-        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap');
 
@@ -21,24 +18,16 @@
             --bg: #030303;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.08);
-            --text: #f1f5f9;
-        }
-
-        .light-theme {
-            --bg: #f8fafc;
-            --glass: rgba(0, 0, 0, 0.03);
-            --border: rgba(0, 0, 0, 0.1);
-            --text: #0f172a;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg) !important;
-            color: var(--text);
-            transition: all 0.3s ease;
-            margin: 0;
-            display: flex;
+            background-color: var(--bg);
+            color: #f1f5f9;
             height: 100vh;
+            display: flex;
+            overflow: hidden;
+            margin: 0;
         }
 
         .glass {
@@ -47,133 +36,88 @@
             border: 1px solid var(--border);
         }
 
-        .message-bubble {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            word-break: break-word;
-            white-space: pre-wrap;
-        }
-
-        .prose {
-            font-size: 0.9rem !important;
-            line-height: 1.5 !important;
-        }
-
-        .prose p {
-            margin-top: 0.5em !important;
-            margin-bottom: 0.5em !important;
-        }
-
-        .prose pre {
-            background: #000 !important;
-            padding: 1rem !important;
-            border-radius: 10px;
-            position: relative;
-            margin: 0.75rem 0 !important;
-            overflow-x: auto;
-            border: 1px solid var(--border);
-            max-width: 100%;
-        }
-
-        .action-btn {
-            position: absolute;
-            top: 6px;
-            font-size: 9px;
-            padding: 3px 6px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
-            cursor: pointer;
-            z-index: 20;
-            border: none;
-        }
-
-        .action-btn:hover {
-            background: var(--accent);
-            color: #000;
-        }
-
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 2px;
-            cursor: pointer;
-            transition: 0.1s;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .sidebar-active {
-            background: rgba(34, 211, 238, 0.1) !important;
-            border-left: 3px solid var(--accent);
-            color: var(--accent);
-        }
-
         .custom-scrollbar::-webkit-scrollbar {
             width: 3px;
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(128, 128, 128, 0.2);
+            background: rgba(34, 211, 238, 0.2);
             border-radius: 10px;
         }
+
+        .prose pre {
+            background: #000 !important;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-sidebar-active {
+                transform: translateX(0) !important;
+            }
+        }
+
+        input[type="text"] {
+            font-size: 16px !important;
+        }
+
+        /* Prevents iOS zoom */
     </style>
 </head>
 
 <body class="flex">
 
-    <aside class="w-72 glass flex flex-col h-full z-20 border-r border-white/5 shrink-0">
+    <div id="sidebar-overlay" onclick="toggleSidebar()"
+        class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden backdrop-blur-sm"></div>
+
+    <aside id="sidebar"
+        class="fixed inset-y-0 left-0 w-72 glass flex flex-col z-40 -translate-x-full transition-transform duration-300 lg:relative lg:translate-x-0 border-r border-white/5 shrink-0">
         <div class="p-5 space-y-4">
-            <h1 class="text-lg font-extrabold tracking-tighter text-cyan-400 flex items-center gap-2">
-                <i data-lucide="zap" class="w-5 h-5"></i> LUMINA
-            </h1>
-            <button onclick="createNewChat()"
-                class="w-full py-2.5 bg-cyan-500 text-white rounded-lg font-bold text-xs flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+            <div class="flex items-center justify-between">
+                <h1 class="text-lg font-extrabold tracking-tighter text-cyan-400 flex items-center gap-2">
+                    <i data-lucide="zap" class="w-5 h-5"></i> LUMINA
+                </h1>
+                <button onclick="toggleSidebar()" class="lg:hidden text-slate-400"><i data-lucide="x"
+                        class="w-6 h-6"></i></button>
+            </div>
+            <button onclick="createNewChat(); if(window.innerWidth < 1024) toggleSidebar();"
+                class="w-full py-2.5 bg-cyan-500 text-white rounded-lg font-bold text-xs flex items-center justify-center gap-2">
                 <i data-lucide="plus" class="w-4 h-4"></i> NEW SESSION
             </button>
-            <input type="text" id="search-history" placeholder="Search..." oninput="renderSidebar()"
-                class="w-full bg-white/5 border border-white/10 rounded-lg py-1.5 px-3 text-[11px] focus:outline-none focus:border-cyan-500/50">
         </div>
-
         <div id="history-list" class="flex-1 overflow-y-auto px-3 space-y-0.5 custom-scrollbar"></div>
-
-        <div class="p-4 border-t border-white/5 space-y-2">
-            <button onclick="toggleTheme()"
-                class="w-full py-2 rounded-lg border border-white/10 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-wider hover:bg-white/5">
-                <i data-lucide="sun" id="theme-icon" class="w-3.5 h-3.5 text-orange-400"></i> <span
-                    id="theme-text">Light Mode</span>
-            </button>
-            <button onclick="clearAllHistory()"
-                class="w-full py-1.5 text-[9px] text-slate-500 hover:text-red-500 uppercase font-bold">Wipe
-                Memory</button>
-        </div>
     </aside>
 
-    <div class="flex-1 flex flex-col min-w-0">
-        <header class="flex items-center justify-between px-8 py-3 border-b glass">
-            <div class="text-[10px] font-mono text-green-500 flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> SYSTEM_READY
+    <div class="flex-1 flex flex-col min-w-0 h-full relative">
+        <header class="flex items-center justify-between px-4 lg:px-8 py-3 border-b glass">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="lg:hidden p-1.5 hover:bg-white/5 rounded-md text-cyan-400"><i
+                        data-lucide="menu" class="w-6 h-6"></i></button>
+                <div class="text-[10px] font-mono text-green-500 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> SYSTEM_READY
+                </div>
             </div>
-            <label class="text-[9px] text-slate-500 uppercase font-bold cursor-pointer flex items-center gap-2">
+            <label class="hidden sm:flex text-[9px] text-slate-500 uppercase font-bold items-center gap-2">
                 <input type="checkbox" id="scroll-lock" checked class="accent-cyan-500"> Auto-Scroll
             </label>
         </header>
 
-        <main id="chat-container" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar w-full"></main>
+        <main id="chat-container" class="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 custom-scrollbar w-full"></main>
 
-        <footer class="p-5 glass border-t">
-            <div class="max-w-4xl mx-auto flex gap-3">
-                <input type="text" id="user-input" placeholder="Prompt..."
-                    class="flex-1 bg-white/5 border border-white/10 rounded-xl py-3.5 px-6 text-sm focus:outline-none focus:border-cyan-500/50"
+        <footer class="p-4 lg:p-5 glass border-t">
+            <div class="max-w-4xl mx-auto flex gap-2">
+                <input type="text" id="user-input" placeholder="Ask Lumina anything..."
+                    class="flex-1 bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-cyan-500/50"
                     onkeydown="if(event.key === 'Enter') sendMessage()">
                 <button id="send-btn" onclick="sendMessage()"
-                    class="bg-cyan-500 text-white px-6 rounded-xl hover:scale-105 transition-all"><i
-                        data-lucide="arrow-up" class="w-5 h-5"></i></button>
+                    class="bg-cyan-500 text-white px-5 rounded-xl hover:scale-105 transition-all">
+                    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+                </button>
                 <button id="stop-btn" onclick="stopGeneration()"
-                    class="hidden bg-red-500 text-white px-5 rounded-xl font-bold text-[10px] uppercase">STOP</button>
+                    class="hidden bg-red-500 text-white px-4 rounded-xl font-bold text-[10px]">STOP</button>
             </div>
         </footer>
     </div>
@@ -186,102 +130,92 @@
         const scrollLock = document.getElementById('scroll-lock');
         let currentChatId = null, abortController = null;
 
-        const renderer = new marked.Renderer();
-        renderer.code = (token, lang) => {
-            const raw = typeof token === 'object' ? token.text : token;
-            const safe = (raw || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            const id = 'c-' + Math.random().toString(36).substr(2, 5);
-            let btns = `<button class="action-btn" style="right:8px" onclick="copyC('${id}', this)">Copy</button>`;
-            if (lang === 'html' || safe.includes('&lt;!DOCTYPE html&gt;')) {
-                btns += `<button class="action-btn" style="right:55px; background:#10b981; color:white;" onclick="previewH('${id}')">Preview</button>`;
-            }
-            return `<div class="relative group">${btns}<pre class="language-${lang || 'txt'}"><code id="${id}">${safe}</code></pre></div>`;
-        };
-        marked.setOptions({ renderer, gfm: true, breaks: true });
+        marked.setOptions({ gfm: true, breaks: true });
 
-        const getHistory = () => JSON.parse(localStorage.getItem('lumina_history') || '[]');
-
-        function renderSidebar() {
-            const q = document.getElementById('search-history').value.toLowerCase();
-            const h = getHistory().filter(c => c.title.toLowerCase().includes(q));
-            document.getElementById('history-list').innerHTML = h.slice().reverse().map(c => `
-                <div class="sidebar-item ${c.id === currentChatId ? 'sidebar-active' : ''}" onclick="loadChat('${c.id}')">
-                    <span class="truncate uppercase tracking-wider">${c.title}</span>
-                    <button class="delete-chat" onclick="deleteSession('${c.id}', event)"><i data-lucide="trash-2" class="w-3 h-3 text-red-400"></i></button>
-                </div>`).join('');
-            lucide.createIcons();
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('mobile-sidebar-active');
+            document.getElementById('sidebar-overlay').classList.toggle('hidden');
         }
 
         async function sendMessage() {
-            const t = userInput.value.trim(); if (!t) return;
+            const prompt = userInput.value.trim(); if (!prompt) return;
             if (chatContainer.querySelector('.opacity-10')) chatContainer.innerHTML = '';
             if (!currentChatId) currentChatId = Date.now().toString();
-            userInput.value = ''; appendMessage('user', t);
-            stopBtn.classList.remove('hidden'); abortController = new AbortController();
-            const aiId = 'ai-' + Date.now(); appendMessage('ai', '...', aiId);
-            const el = document.getElementById(aiId); let full = "";
+
+            userInput.value = ''; appendMessage('user', prompt);
+            stopBtn.classList.remove('hidden');
+            abortController = new AbortController();
+
+            const aiId = 'ai-' + Date.now();
+            appendMessage('ai', '', aiId);
+            const el = document.getElementById(aiId);
+
+            let fullText = "", displayBuffer = "", isFinished = false;
+
+            const typeWriter = setInterval(() => {
+                if (displayBuffer.length > 0) {
+                    fullText += displayBuffer.charAt(0);
+                    displayBuffer = displayBuffer.substring(1);
+                    el.innerHTML = marked.parse(fullText);
+                    Prism.highlightAllUnder(el);
+                    if (scrollLock.checked) chatContainer.scrollTop = chatContainer.scrollHeight;
+                } else if (isFinished) {
+                    clearInterval(typeWriter);
+                    stopBtn.classList.add('hidden');
+                    saveToHistory(prompt, fullText);
+                }
+            }, 12);
 
             try {
-                const res = await fetch('http://localhost:8000/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: t }), signal: abortController.signal });
-                const reader = res.body.getReader(); const dec = new TextDecoder();
-                el.innerText = "";
+                const res = await fetch('http://localhost:8000/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt }),
+                    signal: abortController.signal
+                });
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
                 while (true) {
-                    const { value, done } = await reader.read(); if (done) break;
-                    const lines = dec.decode(value).split('\n');
-                    for (const l of lines) if (l.startsWith('data: ')) {
-                        full += JSON.parse(l.slice(6)).text;
-                        el.innerHTML = marked.parse(full);
-                        Prism.highlightAllUnder(el);
-                        if (scrollLock.checked) chatContainer.scrollTop = chatContainer.scrollHeight;
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    const lines = decoder.decode(value).split('\n');
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const data = JSON.parse(line.slice(6));
+                            if (data.text) displayBuffer += data.text;
+                        }
                     }
                 }
-                saveToHistory(t, full);
-            } catch (e) { if (e.name !== 'AbortError') el.innerText = "Error: Check app.py."; }
-            finally { stopBtn.classList.add('hidden'); }
+            } catch (e) { if (e.name !== 'AbortError') el.innerText = "Error: Check backend."; }
+            finally { isFinished = true; }
         }
 
         function appendMessage(role, content, id = null) {
             const div = document.createElement('div');
-            div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} w-full mb-4`;
-            div.innerHTML = `<div class="${role === 'user' ? 'bg-cyan-600 text-white px-4 py-2' : 'glass px-4 py-2'} rounded-2xl max-w-[90%] prose prose-invert"><div id="${id || ''}">${role === 'user' ? content : marked.parse(content)}</div></div>`;
+            div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} w-full mb-4 px-2`;
+            div.innerHTML = `
+                <div class="${role === 'user' ? 'bg-cyan-600 text-white' : 'glass text-slate-300'} px-4 py-2.5 rounded-2xl max-w-[95%] lg:max-w-[85%] prose prose-invert overflow-hidden">
+                    <div id="${id || ''}">${role === 'user' ? content : marked.parse(content)}</div>
+                </div>`;
             chatContainer.appendChild(div);
             if (scrollLock.checked) chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            const isL = document.body.classList.contains('light-theme');
-            document.getElementById('theme-text').innerText = isL ? "Dark Mode" : "Light Mode";
-            document.getElementById('theme-icon').setAttribute('data-lucide', isL ? "moon" : "sun");
+        function createNewChat() {
+            currentChatId = Date.now().toString();
+            chatContainer.innerHTML = '<div class="flex flex-col items-center justify-center h-full opacity-10"><i data-lucide="zap" class="w-12 h-12 text-cyan-500"></i></div>';
             lucide.createIcons();
         }
 
-        function deleteSession(id, e) {
-            e.stopPropagation();
-            if (!confirm("Delete?")) return;
-            const h = getHistory().filter(x => x.id !== id);
-            localStorage.setItem('lumina_history', JSON.stringify(h));
-            if (currentChatId === id) createNewChat(); else renderSidebar();
-        }
-
-        function copyC(id, b) { navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => { b.innerText = "COPIED"; setTimeout(() => b.innerText = "Copy", 2000); }); }
-        function previewH(id) { const w = window.open(); w.document.write(document.getElementById(id).innerText); w.document.close(); }
-
+        function stopGeneration() { if (abortController) abortController.abort(); }
+        const getHistory = () => JSON.parse(localStorage.getItem('lumina_history') || '[]');
         function saveToHistory(p, r) {
             const h = getHistory(); let c = h.find(x => x.id === currentChatId);
-            if (!c) { c = { id: currentChatId, title: p.slice(0, 15).toUpperCase(), messages: [] }; h.push(c); }
+            if (!c) { c = { id: currentChatId, title: p.slice(0, 20).toUpperCase(), messages: [] }; h.push(c); }
             c.messages.push({ role: 'user', content: p }, { role: 'ai', content: r });
-            localStorage.setItem('lumina_history', JSON.stringify(h)); renderSidebar();
+            localStorage.setItem('lumina_history', JSON.stringify(h));
         }
-        function loadChat(id) { const c = getHistory().find(x => x.id === id); if (!c) return; currentChatId = id; chatContainer.innerHTML = ''; c.messages.forEach(m => appendMessage(m.role, m.content, false)); renderSidebar(); }
-        function createNewChat() {
-            currentChatId = Date.now().toString(); chatContainer.innerHTML = '<div class="flex flex-col items-center justify-center h-full opacity-10"><i data-lucide="zap" class="w-12 h-12 mb-2 text-cyan-500"></i></div>';
-            renderSidebar();
-            lucide.createIcons();
-        }
-        function stopGeneration() { if (abortController) abortController.abort(); }
-        function clearAllHistory() { if (confirm("Clear history?")) { localStorage.clear(); createNewChat(); } }
-        if (!currentChatId) createNewChat(); renderSidebar();
+        createNewChat();
     </script>
 </body>
 
