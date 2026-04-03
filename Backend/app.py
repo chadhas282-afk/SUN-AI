@@ -86,3 +86,6 @@ async def generate_tokens(prompt: str, request: Request):
 @app.post("/chat")
 async def chat(request: Request):
     data = await request.json()
+    return StreamingResponse(
+        
+    )
