@@ -73,3 +73,5 @@ thread.start()
                 yield f"data: {json.dumps({'text': new_text})}\n\n"
             
             await asyncio.sleep(0.01)
+    
+     except Exception as e:
