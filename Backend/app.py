@@ -87,5 +87,5 @@ async def generate_tokens(prompt: str, request: Request):
 async def chat(request: Request):
     data = await request.json()
     return StreamingResponse(
-        
+        generate_tokens(data['prompt'], request),
     )
