@@ -82,3 +82,5 @@ async def generate_tokens(prompt: str, request: Request):
         yield f"data: {json.dumps({'text': ' [Stream Error]'})}\n\n"
     finally:
         thread.join(timeout=1.0)
+
+@app.post("/chat")
